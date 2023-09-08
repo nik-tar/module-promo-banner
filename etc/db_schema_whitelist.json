@@ -1,0 +1,44 @@
+{
+    "niktar_banner": {
+        "column": {
+            "banner_id": true,
+            "active": true,
+            "sort_order": true,
+            "group_code": true,
+            "name": true,
+            "start_date": true,
+            "end_date": true,
+            "created_at": true,
+            "updated_at": true,
+            "retina_image": true,
+            "desktop_image": true,
+            "mobile_image": true,
+            "alt_text": true,
+            "target_url": true,
+            "content": true,
+            "short_content_enabled": true,
+            "short_content": true
+        },
+        "index": {
+            "NIKTAR_BANNER_GROUP_CODE": true,
+            "NIKTAR_BANNER_ACTIVE_GROUP_CODE_START_DATE_END_DATE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "niktar_banner_store": {
+        "column": {
+            "banner_id": true,
+            "store_id": true
+        },
+        "index": {
+            "NIKTAR_BANNER_STORE_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "NIKTAR_BANNER_STORE_BANNER_ID_NIKTAR_BANNER_BANNER_ID": true,
+            "NIKTAR_BANNER_STORE_STORE_ID_STORE_STORE_ID": true
+        }
+    }
+}

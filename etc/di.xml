@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Niktar\PromoBanner\Api\BannerRepositoryInterface"
+                type="Niktar\PromoBanner\Model\BannerRepository"/>
+    <preference for="Niktar\PromoBanner\Api\Data\BannerInterface"
+                type="Niktar\PromoBanner\Model\Banner"/>
+    <preference for="Niktar\PromoBanner\Api\Data\BannerSearchResultsInterface"
+                type="Niktar\PromoBanner\Model\BannerSearchResults"/>
+    <preference for="Niktar\PromoBanner\Api\Data\MediaImageInterface"
+                type="Niktar\PromoBanner\Model\Data\MediaImage"/>
+    <preference for="Niktar\PromoBanner\Api\Data\DirectUrlInterface"
+                type="Niktar\PromoBanner\Model\Data\DirectUrl"/>
+
+    <virtualType name="Niktar\PromoBanner\Model\Api\SearchCriteria\BannerCollectionProcessor\FilterProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor">
+        <arguments>
+            <argument name="customFilters" xsi:type="array">
+                <item name="store_id" xsi:type="object">Niktar\PromoBanner\Model\Api\SearchCriteria\BannerCollectionProcessor\FilterProcessor\StoreId</item>
+                <item name="start_date" xsi:type="object">Niktar\PromoBanner\Model\Api\SearchCriteria\BannerCollectionProcessor\FilterProcessor\DateFilter</item>
+                <item name="end_date" xsi:type="object">Niktar\PromoBanner\Model\Api\SearchCriteria\BannerCollectionProcessor\FilterProcessor\DateFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Niktar\PromoBanner\Model\Api\SearchCriteria\BannerCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Niktar\PromoBanner\Model\Api\SearchCriteria\BannerCollectionProcessor\FilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Niktar\PromoBanner\Model\BannerRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Niktar\PromoBanner\Model\Api\SearchCriteria\BannerCollectionProcessor</argument>
+        </arguments>
+    </type>
+
+    <type name="Niktar\PromoBanner\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">promo_banner/upload</argument>
+            <argument name="basePath" xsi:type="string">promo_banner</argument>
+            <argument name="relativePath" xsi:type="boolean">true</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+            <argument name="allowedMimeTypes" xsi:type="array">
+                <item name="jpg" xsi:type="string">image/jpg</item>
+                <item name="jpeg" xsi:type="string">image/jpeg</item>
+                <item name="gif" xsi:type="string">image/gif</item>
+                <item name="png" xsi:type="string">image/png</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

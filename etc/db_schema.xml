@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="niktar_banner" resource="default" engine="innodb">
+        <column xsi:type="int" name="banner_id" padding="10" unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="boolean" name="active" nullable="false" default="false"/>
+        <column xsi:type="int" name="sort_order" padding="10" unsigned="true" nullable="false" default="10"/>
+        <column xsi:type="varchar" name="group_code" nullable="false" length="32"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255"/>
+
+        <column xsi:type="date" name="start_date" nullable="true"/>
+        <column xsi:type="date" name="end_date" nullable="true"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"/>
+
+        <column xsi:type="text" name="retina_image" nullable="true"/>
+        <column xsi:type="text" name="desktop_image" nullable="true"/>
+        <column xsi:type="text" name="mobile_image" nullable="true"/>
+
+        <column xsi:type="text" name="alt_text" nullable="true"/>
+        <column xsi:type="text" name="target_url" nullable="true"/>
+
+        <column xsi:type="text" name="content" nullable="true"/>
+        <column xsi:type="boolean" name="short_content_enabled" nullable="false" default="false"/>
+        <column xsi:type="text" name="short_content" nullable="true"/>
+
+        <constraint xsi:type="primary" referenceId="PK_NIKTAR_BANNER">
+            <column name="banner_id"/>
+        </constraint>
+        <index referenceId="NIKTAR_BANNER_GROUP_CODE" indexType="btree">
+            <column name="group_code"/>
+        </index>
+        <index referenceId="NIKTAR_BANNER_ACTIVE_GROUP_CODE_START_DATE_END_DATE" indexType="btree">
+            <column name="active"/>
+            <column name="group_code"/>
+            <column name="start_date"/>
+            <column name="end_date"/>
+        </index>
+    </table>
+
+    <table name="niktar_banner_store" resource="default" engine="innodb">
+        <column xsi:type="int" name="banner_id" padding="10" unsigned="true" nullable="false" identity="false"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"/>
+        <constraint xsi:type="primary" referenceId="PK_NIKTAR_BANNER_STORE">
+            <column name="banner_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="NIKTAR_BANNER_STORE_BANNER_ID_NIKTAR_BANNER_BANNER_ID"
+                    table="niktar_banner_store" column="banner_id"
+                    referenceTable="niktar_banner" referenceColumn="banner_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="NIKTAR_BANNER_STORE_STORE_ID_STORE_STORE_ID"
+                    table="niktar_banner_store" column="store_id"
+                    referenceTable="store" referenceColumn="store_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="NIKTAR_BANNER_STORE_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+</schema>
